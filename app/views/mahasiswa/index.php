@@ -6,13 +6,29 @@
         </div>
     </div>
 
+    <!-- Button trigger modal -->
     <div class="row">
         <div class="col-lg-6">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary mb-4 tampilModalTambah" data-bs-toggle="modal" data-bs-target="#formModal">
+            <button type="button" class="btn btn-primary mb-2 tampilModalTambah" data-bs-toggle="modal" data-bs-target="#formModal">
                 + Tanbah Data Mahasiswa
             </button>
+        </div>
+    </div>
 
+    <!-- Searching -->
+    <div class="row">
+        <div class="col-lg-6">
+            <form action="<?= BASE_URL; ?>/mahasiswa/cari" method="POST">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Cari Mahasiswa.." name="keyword" id="keyword" autocomplete="off" aria-label="Cari Mahasiswa.." aria-describedby="tombolCari" required>
+                    <button class="btn btn-primary" type="submit" id="tombolCari">Cari</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
             <h3>Daftar Mahasiswa</h3>
             <ul class="list-group">
                 <?php foreach($data["mhs"] as $mhs) : ?> <!-- Iterasi setiap baris data mahasiswa dari array hasil query -->
