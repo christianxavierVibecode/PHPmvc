@@ -12,4 +12,20 @@ class Mahasiswa extends Controller {
         $this->view("mahasiswa/index", $data);  // Render tabel/list mahasiswa dengan data dari model
         $this->view("templates/footer");        // Render footer
     }
+
+    public function detail($id){
+        
+        $data['judul'] = "Daftar Mahasiswa"; 
+        // Jika data mahasiswa dengan ID tertentu tidak ditemukan, tampilkan pesan "Data tidak ditemukan" untuk setiap field
+        $data['mhs'] = $this->model("Mahasiswa_model")->getMahasiswaById($id) ? $this->model("Mahasiswa_model")->getMahasiswaById($id) : [
+            "id" => "Data tidak ditemukan", 
+            "nama" => "Data tidak ditemukan", 
+            "nrp" => "Data tidak ditemukan", 
+            "email" => "Data tidak ditemukan", 
+            "jurusan" => "Data tidak ditemukan"
+        ];
+        $this->view("templates/header", $data); 
+        $this->view("mahasiswa/detail", $data);  
+        $this->view("templates/footer");        
+    }
 }

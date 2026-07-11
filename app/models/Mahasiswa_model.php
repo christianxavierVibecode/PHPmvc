@@ -1,26 +1,22 @@
 <?php
 
 class Mahasiswa_model {
-    private $dbh; // Database handler: objek koneksi PDO ke database
-    private $stmt; // Statement: objek prepared statement PDO
+    private $table = "mahasiswa"; // Nama tabel database yang digunakan
+    private $db; // Objek Database untuk koneksi dan query
 
-    // Constructor: membuka koneksi ke database menggunakan PDO saat model diinstansiasi
     public function __construct() {
-        // Data Source Name
-        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME; // Buat DSN string untuk koneksi MySQL
-
-        try {
-            $this->dbh = new PDO($dsn, DB_USER, DB_PASS); // Buka koneksi PDO dengan kredensial dari Constants
-        } catch (PDOException $e){
-            die($e->getMessage()); // Hentikan eksekusi dan tampilkan pesan error jika koneksi gagal
-        }
+        $this->db = new Database(); // Inisialisasi objek Database saat model diinstansiasi
     }
 
-    // Method untuk mengambil semua data mahasiswa, mengembalikan array asosiatif
     public function getAllMahasiswa() {
-        $this->stmt = $this->dbh->prepare("SELECT * FROM mahasiswa"); // Menyiapkan query SQL
-        $this->stmt->execute(); // Mengeksekusi query SQL
-        return $this->stmt->fetchAll(PDO::FETCH_ASSOC); // Mengembalikan semua baris hasil dalam format array asosiatif
+        $this->db->query("SELECT * FROM " . $this->table); // Siapkan query untuk mengambil semua data mahasiswa
+        return $this->db->resultSet(); // Eksekusi query dan kembalikan hasil sebagai array asosiatif
+    }
+
+    public function getMahasiswaById($id) {
+        $this->db->query("SELECT * FROM " . $this->table . " WHERE id = :id"); // Siapkan query untuk mengambil data mahasiswa berdasarkan ID
+        $this->db->bind(':id', $id); // Bind parameter ID ke query
+        return $this->db->single(); // Eksekusi query dan kembalikan hasil sebagai array asosiatif
     }
 
 }
