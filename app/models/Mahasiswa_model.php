@@ -19,4 +19,20 @@ class Mahasiswa_model {
         return $this->db->single(); // Eksekusi query dan kembalikan hasil sebagai array asosiatif
     }
 
+    public function tambahDataMahasiswa($postData){
+        $query = "INSERT INTO mahasiswa
+                    VALUES
+                  ('', :nama, :nrp, :email, :jurusan)";
+        
+        $this->db->query($query);
+        $this->db->bind('nama',$postData["nama"]);
+        $this->db->bind('nrp',$postData["nrp"]);
+        $this->db->bind('email',$postData["email"]);
+        $this->db->bind('jurusan',$postData["jurusan"]);
+
+        $this->db->execute();
+
+        return $this->db->rowCount();
+    }
+
 }

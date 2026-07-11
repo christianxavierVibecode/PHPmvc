@@ -63,4 +63,8 @@ class Database {
         $this->execute(); // Eksekusi statement
         return $this->stmt->fetch(PDO::FETCH_ASSOC); // Ambil satu baris hasil sebagai array asosiatif
     }
+
+    public function rowCount(){ //rowCount disini merupakan method costum
+        return $this->stmt->rowCount(); //rowCount disini merupakan method milik PDO
+    }
 }

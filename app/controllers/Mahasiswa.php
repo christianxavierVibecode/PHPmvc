@@ -5,7 +5,6 @@ class Mahasiswa extends Controller {
 
     // Method default untuk menampilkan seluruh data mahasiswa dari database
     public function index(){
-        
         $data['judul'] = "Daftar Mahasiswa"; // Set judul halaman
         $data['mhs'] = $this->model("Mahasiswa_model")->getAllMahasiswa(); // Muat model dan ambil semua data mahasiswa dari DB
         $this->view("templates/header", $data); // Render header dengan judul halaman
@@ -14,7 +13,6 @@ class Mahasiswa extends Controller {
     }
 
     public function detail($id){
-        
         $data['judul'] = "Daftar Mahasiswa"; 
         // Jika data mahasiswa dengan ID tertentu tidak ditemukan, tampilkan pesan "Data tidak ditemukan" untuk setiap field
         $data['mhs'] = $this->model("Mahasiswa_model")->getMahasiswaById($id) ? $this->model("Mahasiswa_model")->getMahasiswaById($id) : [
@@ -27,5 +25,12 @@ class Mahasiswa extends Controller {
         $this->view("templates/header", $data); 
         $this->view("mahasiswa/detail", $data);  
         $this->view("templates/footer");        
+    }
+
+    public function tambah(){
+        if($this->model("Mahasiswa_model")->tambahDataMahasiswa($_POST) > 0){
+            header("Location: " . BASE_URL . "/mahasiswa");
+            exit;
+        }
     }
 }
