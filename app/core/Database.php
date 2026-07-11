@@ -26,10 +26,12 @@ class Database {
         }
     }
 
+    // Method untuk menyiapkan query SQL (prepare statement)
     public function query($query){
         $this->stmt = $this->dbh->prepare($query); // Siapkan query SQL untuk dieksekusi
     }
 
+    // Method untuk mengikat parameter input ke query SQL (binding data)
     public function bind($param, $value, $type = null){
         if(is_null($type)){
             switch(true){
@@ -50,20 +52,24 @@ class Database {
         $this->stmt->bindValue($param, $value, $type); // Bind nilai ke parameter query dengan tipe yang sesuai
     }
 
+    // Method untuk mengeksekusi prepared statement
     public function execute(){
         $this->stmt->execute(); // Eksekusi statement yang telah disiapkan
     }
 
+    // Method untuk mengeksekusi query dan mengembalikan seluruh data hasil berupa array asosiatif
     public function resultSet(){
         $this->execute(); // Eksekusi statement
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC); // Ambil semua hasil sebagai array asosiatif
     }
 
+    // Method untuk mengeksekusi query dan mengembalikan satu baris data hasil berupa array asosiatif
     public function single(){
         $this->execute(); // Eksekusi statement
         return $this->stmt->fetch(PDO::FETCH_ASSOC); // Ambil satu baris hasil sebagai array asosiatif
     }
 
+    // Method untuk menghitung jumlah baris data yang terpengaruh oleh operasi query (CUD)
     public function rowCount(){ //rowCount disini merupakan method costum
         return $this->stmt->rowCount(); //rowCount disini merupakan method milik PDO
     }
