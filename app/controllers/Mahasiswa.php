@@ -50,4 +50,37 @@ class Mahasiswa extends Controller {
             exit;
         }
     }
+
+    public function getUbah() {
+        // Baca data JSON dari body request
+        $input = file_get_contents('php://input');
+        $postData = json_decode($input, true); // Decode JSON menjadi array PHP
+    
+        // Ambil idUser dari data JSON
+        $id = isset($postData['idUser']) ? $postData['idUser'] : null;
+    
+        // Jika id tidak ditemukan, kembalikan error
+        if (!$id) {
+            echo json_encode(["error" => "ID tidak ditemukan"]);
+            return;
+        }
+    
+        // Ambil data mahasiswa berdasarkan ID
+        $data = $this->model('Mahasiswa_model')->getMahasiswaById($id);
+    
+        // Kembalikan data dalam format JSON
+        echo json_encode($data);
+    }
+
+    public function ubah(){
+        if($this->model("Mahasiswa_model")->ubahDataMahasiswa($_POST) > 0){
+            Flasher::setFlash("Berhasil", "Diubahkan", "success");
+            header("Location: " . BASE_URL . "/mahasiswa");
+            exit;
+        } else {
+            Flasher::setFlash("Gagal", "Diubahkan", "danger");
+            header("Location: " . BASE_URL . "/mahasiswa");
+            exit;
+        }
+    }
 }

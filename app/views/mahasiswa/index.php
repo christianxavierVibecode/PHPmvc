@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-lg-6">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#formModal">
+            <button type="button" class="btn btn-primary mb-4 tampilModalTambah" data-bs-toggle="modal" data-bs-target="#formModal">
                 + Tanbah Data Mahasiswa
             </button>
 
@@ -19,6 +19,7 @@
                     <li class="list-group-item">
                         <?= $mhs["nama"]; ?>
                         <a href="<?= BASE_URL;?>/mahasiswa/hapus/<?= $mhs['id']; ?>" class="badge text-bg-danger text-decoration-none float-end mx-1" onclick='return confirm("Yakin ingin menghapus ?");'>Hapus</a>
+                        <a href="<?= BASE_URL;?>/mahasiswa/ubah/<?= $mhs['id']; ?>" class="badge text-bg-warning text-decoration-none float-end mx-1 tampilModalUbah" data-bs-toggle="modal" data-bs-target="#formModal" data-id=<?= $mhs['id']; ?>>Ubah</a>
                         <a href="<?= BASE_URL;?>/mahasiswa/detail/<?= $mhs['id']; ?>" class="badge text-bg-primary text-decoration-none float-end mx-1">Detail</a>
                     </li>
                 <?php endforeach; ?> <!-- Akhir loop iterasi data mahasiswa -->
@@ -34,11 +35,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="judulModal">Tambah Data Mahasiswa</h1>
+        <h1 class="modal-title fs-5" id="formModalLabel">Tambah Data Mahasiswa</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form action="<?= BASE_URL; ?>/mahasiswa/tambah" method="POST">
+        <!-- Hidden Input -->
+         <input type="hidden" name="id" id="id">
 
         <!-- Inputan Nama -->
         <div class="mb-3">
